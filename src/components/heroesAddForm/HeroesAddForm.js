@@ -19,7 +19,7 @@ import { useHttp } from "../../hooks/http.hook";
 const HeroesAddForm = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [element, setElement] = useState('');
+    const [element, setElement] = useState('fire');
 
     const dispatch = useDispatch();
     const {request} = useHttp();
@@ -32,9 +32,13 @@ const HeroesAddForm = () => {
             description,
             element
         };
-        dispatch(heroesAdd(newHero));
         request('http://localhost:3001/heroes', "POST", JSON.stringify(newHero))
-            .catch(() => dispatch(heroesFetchingError()))
+            .then(() => dispatch(heroesAdd(newHero)))
+            .catch(() => dispatch(heroesFetchingError()));
+
+        setName('');
+        setDescription('');
+        setElement('');
     }
 
     const {filters} = useSelector(state => state);
@@ -81,7 +85,7 @@ const HeroesAddForm = () => {
                     <option value="water">Вода</option>
                     <option value="wind">Ветер</option>
                     <option value="earth">Земля</option> */}
-                    {filters.filter(item => item.name !== 'all').map(item => <option key={item.name} value={item.name}>{item.translate}</option>)}
+                    {filters.map(item => item.name === 'all' ? null : <option key={item.name} value={item.name}>{item.translate}</option>)}
                 </select>
             </div>
 
