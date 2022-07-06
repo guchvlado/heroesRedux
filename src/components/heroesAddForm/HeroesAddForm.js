@@ -1,19 +1,7 @@
-
-
-// Задача для этого компонента:
-// Реализовать создание нового героя с введенными данными. Он должен попадать
-// в общее состояние и отображаться в списке + фильтроваться
-// Уникальный идентификатор персонажа можно сгенерировать через uiid
-// Усложненная задача:
-// Персонаж создается и в файле json при помощи метода POST
-// Дополнительно:
-// Элементы <option></option> желательно сформировать на базе
-// данных из фильтров
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4} from 'uuid';
-
-import { heroesAdd, heroesFetchingError } from "../../actions";
+import { heroesAdd } from '../heroesList/heroesSlice'
 import { useHttp } from "../../hooks/http.hook";
 
 const HeroesAddForm = () => {
@@ -34,14 +22,14 @@ const HeroesAddForm = () => {
         };
         request('http://localhost:3001/heroes', "POST", JSON.stringify(newHero))
             .then(() => dispatch(heroesAdd(newHero)))
-            .catch(() => dispatch(heroesFetchingError()));
+            .catch((err) => console.log(err));
 
         setName('');
         setDescription('');
         setElement('');
     }
 
-    const {filters} = useSelector(state => state);
+    const {filters} = useSelector(state => state.filters);
 
     return (
         <form className="border p-4 shadow-lg rounded" onSubmit={addHandler}>
@@ -81,10 +69,6 @@ const HeroesAddForm = () => {
                     id="element" 
                     name="element">
                     <option disabled >Я владею элементом...</option>
-                    {/* <option value="fire">Огонь</option>
-                    <option value="water">Вода</option>
-                    <option value="wind">Ветер</option>
-                    <option value="earth">Земля</option> */}
                     {filters.map(item => item.name === 'all' ? null : <option key={item.name} value={item.name}>{item.translate}</option>)}
                 </select>
             </div>

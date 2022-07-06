@@ -1,46 +1,15 @@
-export const heroesFetching = () => {
-    return {
-        type: 'HEROES_FETCHING'
-    }
+import {heroesFetched, heroesFetchingError, heroesFetching} from '../components/heroesList/heroesSlice';
+import { filtersFetched } from '../components/heroesFilters/filtersSlice';
+
+export const fetchHeroes = (request) => (dispatch) => {
+    dispatch(heroesFetching());
+    request("http://localhost:3001/heroes")
+        .then(data => dispatch(heroesFetched(data)))
+        .catch(() => dispatch(heroesFetchingError()))
 }
 
-export const heroesFetched = (heroes) => {
-    return {
-        type: 'HEROES_FETCHED',
-        payload: heroes
-    }
-}
-
-export const heroesFetchingError = () => {
-    return {
-        type: 'HEROES_FETCHING_ERROR'
-    }
-}
-
-export const heroesDelete = (id) => {
-    return {
-        type: 'HEROES_DELETE',
-        payload: id
-    }
-}
-
-export const heroesAdd = (newHero) => {
-    return {
-        type: 'HEROES_ADD',
-        payload: newHero
-    }
-}
-
-export const heroesFilter = (filterElement) => {
-    return {
-        type: "HEROES_FILTER",
-        payload: filterElement
-    }
-}
-
-export const filtersFetched = (filters) => {
-    return {
-        type: 'FILTERS_FETCHED',
-        payload: filters
-    }
+export const fetchFilters = (request) => (dispatch) => {
+    request("http://localhost:3001/filters")
+        .then(data => dispatch(filtersFetched(data)))
+        .catch(() => {throw new Error('filters error')}) 
 }
