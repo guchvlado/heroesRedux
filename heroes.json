@@ -23,30 +23,41 @@
       "name": "ytryrty",
       "description": "tryrtyt",
       "element": "water"
+    },
+    {
+      "id": "c188a250-26b4-4b67-933d-e58f16fc6783",
+      "name": "qeq",
+      "description": "ewqeqewe",
+      "element": "wind"
     }
   ],
   "filters": [
     {
+      "id": "all",
       "name": "all",
       "classes": "btn-outline-dark",
       "translate": "Все"
     },
     {
+      "id": "fire",
       "name": "fire",
       "classes": "btn-danger",
       "translate": "Огонь"
     },
     {
+      "id": "water",
       "name": "water",
       "classes": "btn-primary",
       "translate": "Вода"
     },
     {
+      "id": "wind",
       "name": "wind",
       "classes": "btn-success",
       "translate": "Ветер"
     },
     {
+      "id": "earth",
       "name": "earth",
       "classes": "btn-secondary",
       "translate": "Земля"

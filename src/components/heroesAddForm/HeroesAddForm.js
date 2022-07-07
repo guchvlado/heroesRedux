@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { v4 as uuidv4} from 'uuid';
 import { heroesAdd } from '../heroesList/heroesSlice'
 import { useHttp } from "../../hooks/http.hook";
+import { selectAll } from "../heroesFilters/filtersSlice";
+import store from "../../store";
 
 const HeroesAddForm = () => {
     const [name, setName] = useState('');
@@ -29,7 +31,8 @@ const HeroesAddForm = () => {
         setElement('');
     }
 
-    const {filters} = useSelector(state => state.filters);
+    // const {filters} = useSelector(state => state.filters);
+    const filters = selectAll(store.getState());
 
     return (
         <form className="border p-4 shadow-lg rounded" onSubmit={addHandler}>
